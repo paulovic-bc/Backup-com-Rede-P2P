@@ -1,0 +1,6 @@
+# Nodes Folder
+node*/
+
+# Other Files
+test_fil*.txt
+downloaded_testfile*.txt

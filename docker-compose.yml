@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   ipfs-node1:
     image: ipfs/go-ipfs:latest

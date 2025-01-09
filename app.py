@@ -40,8 +40,8 @@ def download_file_from_ipfs(node_url: str, file_hash: str, output_path: str) -> 
 def main():
     """Main function to upload and download a file."""
 
-    node1_url = "http://192.168.1.101:5001"
-    node2_url = "http://192.168.1.102:5001"
+    node1_url = "http://localhost:5001"
+    node2_url = "http://localhost:5002"
 
     file_to_upload = "test_file.txt"
 

@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   ipfs-node4:
-    image: ipfs/go-ipfs:latest
+    image: ipfs/go-ipfs:master-2025-01-16-f41b190
     container_name: ipfs-node4
     ports:
       - "5004:5001" # API
       - "4004:4001" # Libp2p
       - "8084:8080" # Gateway
     volumes:
-      - ./node4/data:/data/ipfs
+      - ./node_data/node4/data:/data/ipfs
       - ./swarm.key:/data/ipfs/swarm.key:ro
     networks:
       ipfs-private:

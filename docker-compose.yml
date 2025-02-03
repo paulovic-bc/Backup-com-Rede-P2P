@@ -1,0 +1,49 @@
+services:
+  ipfs-node1:
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs-node1
+    ports:
+      - "5001:5001" # API
+      - "4001:4001" # Libp2p
+      - "8081:8080" # Gateway
+    volumes:
+      - ./node1/data:/data/ipfs
+      - ./swarm.key:/data/ipfs/swarm.key:ro
+    networks:
+      ipfs-private:
+        ipv4_address: 192.168.1.101
+
+  ipfs-node2:
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs-node2
+    ports:
+      - "5002:5001" # API
+      - "4002:4001" # Libp2p
+      - "8082:8080" # Gateway
+    volumes:
+      - ./node2/data:/data/ipfs
+      - ./swarm.key:/data/ipfs/swarm.key:ro
+    networks:
+      ipfs-private:
+        ipv4_address: 192.168.1.102
+
+  ipfs-node3:
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs-node3
+    ports:
+      - "5003:5001" # API
+      - "4003:4001" # Libp2p
+      - "8083:8080" # Gateway
+    volumes:
+      - ./node3/data:/data/ipfs
+      - ./swarm.key:/data/ipfs/swarm.key:ro
+    networks:
+      ipfs-private:
+        ipv4_address: 192.168.1.103
+
+networks:
+  ipfs-private:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24

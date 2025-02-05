@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  ipfs-node1:
+    image: ipfs/go-ipfs:master-2025-01-16-f41b190
+    container_name: ipfs-node1
+    ports:
+      - "5001:5001" # API
+      - "4001:4001" # Libp2p
+      - "8081:8080" # Gateway
+    volumes:
+      - ./node_data/node1/data:/data/ipfs
+      - ./swarm.key:/data/ipfs/swarm.key:ro
+    networks:
+      ipfs-private:
+        ipv4_address: 192.168.1.101
+
+  ipfs-node2:
+    image: ipfs/go-ipfs:master-2025-01-16-f41b190
+    container_name: ipfs-node2
+    ports:
+      - "5002:5001" # API
+      - "4002:4001" # Libp2p
+      - "8082:8080" # Gateway
+    volumes:
+      - ./node_data/node2/data:/data/ipfs
+      - ./swarm.key:/data/ipfs/swarm.key:ro
+    networks:
+      ipfs-private:
+        ipv4_address: 192.168.1.102
+
+  ipfs-node3:
+    image: ipfs/go-ipfs:master-2025-01-16-f41b190
+    container_name: ipfs-node3
+    ports:
+      - "5003:5001" # API
+      - "4003:4001" # Libp2p
+      - "8083:8080" # Gateway
+    volumes:
+      - ./node_data/node3/data:/data/ipfs
+      - ./swarm.key:/data/ipfs/swarm.key:ro
+    networks:
+      ipfs-private:
+        ipv4_address: 192.168.1.103
+
+  cluster_db:
+    image: postgres:16.4
+    container_name: cluster-database
+    env_file:
+      - ./src/.env.docker
+    ports:
+      - "5434:5432"
+    volumes:
+      - cluster_database:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+    networks:
+      - ipfs-private
+
+  cluster_backend:
+    image: cluster_backend:latest
+    container_name: cluster-api
+    depends_on:
+      cluster_db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ClusterDockerfile
+    command: python src/cluster/run_cluster.py --port 8001
+    env_file:
+      - ./src/.env.docker
+    links:
+      - cluster_db
+    ports:
+      - 8001:8001
+    environment:
+      DEBUG: 1
+      TZ: "America/Sao_Paulo"
+      PGTZ: "America/Sao_Paulo"
+    restart: always
+    networks:
+      - ipfs-private
+  
+volumes:
+  cluster_database:
+
+networks:
+  ipfs-private:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+        

@@ -1,0 +1,44 @@
+[
+  {
+    "model": "nodes.node",
+    "pk": 1,
+    "fields": {
+      "name": "Setor A",
+      "ip_protocol": "ip4",
+      "ip_address": "192.168.1.101",
+      "transport_protocol": "tcp",
+      "port": "4001",
+      "network_type": "p2p",
+      "peer_id": "12D3KooWEqjnGVUAzULq1ih4fyB8GFLU4GkDsnZ2hyKYiC2hquBh",
+      "active": true
+    }
+  },
+  {
+    "model": "nodes.node",
+    "pk": 2,
+    "fields": {
+      "name": "Setor B",
+      "ip_protocol": "ip4",
+      "ip_address": "192.168.1.102",
+      "transport_protocol": "tcp",
+      "port": "4001",
+      "network_type": "p2p",
+      "peer_id": "12D3KooWCNijMkqH6Tm5AmdwwDaEDJVifZ3qDdu4KeCLhkEyywjx",
+      "active": true
+    }
+  },
+  {
+    "model": "nodes.node",
+    "pk": 3,
+    "fields": {
+      "name": "Setor C",
+      "ip_protocol": "ip4",
+      "ip_address": "192.168.1.103",
+      "transport_protocol": "tcp",
+      "port": "4001",
+      "network_type": "p2p",
+      "peer_id": "12D3KooWA8VqiWiPXutvYvUMPhxB54LG4LspnA55SQahEEpaWz7R",
+      "active": true
+    }
+  }
+]

@@ -1,0 +1,7 @@
+# Nodes Folder
+node_data/node*/
+
+# Other Files
+test_fil*.txt
+downloaded_testfile*.txt
+*.pyc
